@@ -8,6 +8,8 @@ Some participants were reached through forums frequented by data analysts\footno
 
 The questions and the data for the survey are available at: \url{http://TODO}
 
+Caveats
+
 \subsubsection{Participant Demographics}
 The survey asked a series of questions about the participants' job descriptions, expertise, and use of certain tools/interfaces.
 We briefly summarize the results.
@@ -97,47 +99,37 @@ Such approaches require a clear definition of dirty data that is independent of 
 \vspace{0.5em}
 \emph{Most of these errors are subtle enough that the analysis will go through e.g., with standard null value semantics of SQL, but give an incorrect answer. Usually is only caught weeks later after someone notices something like...well the Wilmington branch cannot have 1M sales in a week}
 
+\subsubsection{Debugging and Validation}
+We also found that debugging and evaluating data analysis pipelines for data error is a significant challenge. We asked the participants ``How do you determine whether the data is sufficiently clean to trust the analysis?'', and it was clear from the responses that most analysts had not thought about this problem:
 
+\vspace{0.5em}
+\emph{Other than common sense we do not have a procedure to do this.}
 
+\vspace{0.5em}
+\emph{We usually do not do rigorous validation of data cleaning. We typically clean our data until the desired analytics works without error. This is not desirable but practical since in most cases data error is probably overshadowed by errors/inaccuracies in the models themselves. -Data Analyst}
 
-  
+\vspace{0.5em}
 
-How do we detect dirty data?
+One of the most interesting findings was that analysts used explainability as a proxy for validating data cleaning. That is, they ensured that they could justify their all of their operations.
 
-How do we deal with dirty data?: 
+\vspace{0.5em}
+\emph{Usually the most time is spent getting the data into a state where your code even runs. After that, we make sure that we can explain every trend seen in the analysis.}
 
-Is Dirty Data Too Big?: To both groups of participants we asked the question “Has the scale of the data ever made it challenging to clean”. (k/N) We found that most of the self-reported infrastructure engineers suggested that scale was NOT an issue, while we found that (k/N) the reverse was true among the data analysts. This suggests that the type of dirty data is important to the question of scale. Errors that are semantic in nature may be harder to clean and detect as they require more discretion from the analysis.
+\subsubsection{Analysis-Cleaning Iteration}
+We also found that many participants reported an interactive and iterative process.
 
-“Build around common formats, otherwise it's all domain- and content-specific. Without fail, a non-trivial effort is required to "reduce problem to one previously solved", whether it be data access or translation of format for use with pre-existing tools.”-Infrastructure Engineer
+\vspace{0.5em}
+\emph{Do your level best on initial sample of data, determine what are exceptions and build filters. Iterate with greater knowledge.}
 
-“We usually do not do rigorous validation of data cleaning. We typically clean our data until the desired analytics works without error. This is not desirable but practical since in most cases data error is probably overshadowed by errors/inaccuracies in the models themselves.” -Data Analyst
+\vspace{0.5em}
+\emph{Iterative process, where I assess biggest problem, devise a fix, re-evaluate. It is dirty work.}
 
-.
+\vspace{0.5em}
 
-Iteration vs. Interactiveness
+This suggests that analysts are adaptively cleaning their datasets iterating between cleaning and querying the data. One of the biggest concerns that this raises is over-fitting with data cleaning and confirmation bias. This coupled with a lack of evaluation methodology is particularly worrisome. One analyst addressed this problem by comparing to other published results to ensure that their analysis is in agreement:
 
-“Do your level best on initial sample of data, determine what are exceptions and build filters. Iterate with greater knowledge.”
+\vspace{0.5em}
+\emph{We typically cross-reference data with other published materials to make sure it is in the right ballpark.}
+\vspace{0.5em}
 
-“Iterative process, where I assess biggest problem, devise a fix, re-evaluate. It is dirty work.”
-
-“Usually the most time is spent getting the data into a state where your code even runs. After that, we make sure that we can explain every trend seen in the analysis.”
-
-Semantics of the data and who knows it
-
-“Domain expertise, I guess. I wish there were a more rigorous way to do this but we look at the models and guess if the data are correct.”
-
-“When records are dirty, we usually identify the source of truth (in our case a hospital) and call them and figure out what is going on.”
-
-“Much of the data cleaning and formatting logic goes into design views of the data that exclude errors or particularly questionable data. We design such processed data views with the help of development operations. Of course there are times when we have to go back to the source data to figure out if there are any artifacts in our analysis.”
-
-
-
-
-
-Interactive vs noninteractive
-
-How does debugging/validating correct cleaning get done?
-
-The 99 percent
-
-Overfitting the cleaning
+This solution is obviously not generalizable as many data analysis projects in industry are one-of-a-kind, and there likely does not exist a publicly available similar clean dataset to validate results.
