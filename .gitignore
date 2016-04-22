@@ -1,0 +1,18 @@
+# WIP pdf
+main.pdf
+
+# Emacs specific
+*~
+*#
+
+# OSX junk
+.DS_Store
+
+# Latex junk
+*.aux
+*.log
+*.synctex.gz
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
