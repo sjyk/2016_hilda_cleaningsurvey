@@ -1,14 +1,29 @@
 \section{The Future of Data Cleaning}\label{sec:future}
-Here’s a general system/interactive loop that is pie in the sky that would work for the 99\% cases
 
-Concrete Technical Problems 1 2 3 4 with possible solutions.
+Future directions for interactive data cleaning/integration
 
-Usability -- mapping user interactions to the many many algorithms
+* Here’s a general system/interactive loop that is pie in the sky that would workfor the 99% cases.
+    * Data cleaning is user and context dependent.  So much relies on the developer’s, or downstream user's expert knowledge that interactive solutions are needed.    
+    * In fact, in some cases, the data cleaning process is divorced from the users using the data cleaning, which is surprising given the context-sensitive nature.
+    * trying cleaning procedures, algorithms, tuning parameters out, and evaluating the results through visual inspection of computed metrics, or the cleaned data
+    * Needs highly interactive systems, and often visual systems for domain experts
+    * Figure 1 shows a highlevel loop
+    * Only when combined into a single system does it make sense
+    * This motivates a set of interesting technical problems that we outline below.
+* A language or languages for data cleaning.  An operation, such as deduplication involves a large number of possible algorithms or sytems techinques, ranging from crowdsourced solsutions(REF Anhai), machine learning-based fuzzy matching(REF).  It is often easier for a user to provide correct results rather than.
+* Be careful about survey biased towards technical people, not those that use GUIs. 
+* Usability: Tied with the language are a set of interactions to match the language operations (REF joe’s CIDR paper).  This is admittedly an amorpheous topic.  (REF agreementmaker work)
+* Goal oriented cleaning.  General data cleaning is rarely needed, and pay-as-you-go solutions(REF data spaces) are needed in most applications.   This begs the qusetion for hminimizing expert involvement.   Solutions such as sampleclean are oriented towards specializing the human effort towards porudictive tasks that maximize the cleaning for a particular application.  
+* Automation. 
+    * Hyperparameter tuning, however visual inspection by manually tuning each or combinations of parameters is both slow and and error-prone.  Automated hyperparemeter tuning (REF evan)
+    * String value munging, either deduplication, extraction, fixes.  Existing tools are often not sufficient and user intervention (REF Wrangler) is necessary.  However even in this settings, ways to generate suggestions and show them is better than users picking operations to perform.
+    * active learning is used, but only for crowd workers that fit inside an operator good progress folks.
+    * Opporutinity let the expert be the human in the loop.  The data analyst IS the human in the loop.
+    * Let humans do what they do best, machines to the rest.
+* Testing and debugging cleaning.  Data cleaning does not live within a vacuum.  It is often motivated by a set of desired applications, and .  How can it be tested?  For example, what effects will introducing or modiying a data cleaning procedure have on the rest of the dataset, or the downstream application?  For example, in our survey several respondents noted that their evaluation was based on whether the downstream applicaiton compiles or not.
+    * Reference Self eval idea.  long pipeline from cleaning and output, so insert inspection.  
+    * Reference benchmarking work and systematic ways to evaluate the efficacy of an approach when there is ground truth and when there is no ground truth.
+* (SANJAY) Overfitting and sharing.   It is easy to overfit the data cleaning to the intricacies of a particular application and the data for that application.  Although this is easy to do, it makes it difficult to share and re-use data cleaning procedures for similar tasks in the future, or share within an organization.  In these cases, tools to help prevent overfitting, similar to regularization in machine learning, are needed to help generalize data cleaning workflows into reusable components.  High level scripting languages can help in this regard, but automated tools are also needed.
 
-Automate what you can -- string value data cleaning.  Wha??  What has been automated and what we think can be automated aka hyperparameter tuning. 
+In summary, we are in the early days of highly interactive data cleaning and preparation and we are optimistic about the improvement that can be made by bringing user interactivity into the process.
 
-What effects did this cleaning have on the whole dataset?
-
-Debugging for data cleaning
-
-Combating overfitting
