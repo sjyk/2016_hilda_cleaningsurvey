@@ -19,11 +19,11 @@ In practice, however, we found that the data cleaning process is commonly split 
 % As highlighted in the top half of Figure~\ref{f:arch}, changes to the cleaning process occur based on observations made at the end of the analysis pipeline.  
 
 \vspace{0.5em}
-\noindent\textbf{Developing High-level Language for Domain Experts:} Data cleaning is an involved process that involves extraction, schema/ontology matching, value imputation, deduplication, and other processes.
+\noindent\textbf{Developing High-level Language for Domain Experts:} Data cleaning is an involved process that involves extraction, schema/ontology matching, value imputation, de-duplication, and other processes.
 In addition, each of these operations encapsulates dozens of specialized algorithms such as machine learning, clustering, or rule-based procedures.
 It is both difficult for domain experts to navigate through the zoo of options, and easy for those implementing data cleaning operations to become married to a specific algorithmic choice.
 In addition, these parties must interact, and it is important to facilitate the coordination between the two.
-There is a need for a high level language for domain experts to describe the data cleaning goals at a logical level (e.g., providing deduplication examples, descriptions of outliers) that also enables physical implementation choices to be guided by automated tools or the technical experts that are tasked with implementing data cleaning at scale. {\color{red}{more details?}} \dhaas{Can we just cite AJAX / Wisteria as "initial approaches", and leave it open-ended?}
+There is a need for a high level language for domain experts to describe the data cleaning goals at a logical level (e.g., providing de-duplication examples, descriptions of outliers) that also enables physical implementation choices to be guided by either automated tools or the technical experts that are tasked with implementing data cleaning at scale~\cite{DBLP:conf/sigmod/Galhardas00,wisteria}. 
 
 \vspace{0.5em}
 \noindent\textbf{Usability and Interactivity:} The need to focus on usability and visual interaction has been reiterated across many domains:  Wrangler~\cite{kandel2011wrangler} enables domain experts to perform complex text extraction tasks at scale, and  Polaris~\cite{stolte2002polaris} helps business analysts perform data-cube analysis through a visual interface. These systems place emphasis on the end-to-end process by reducing bottlenecks that stem from human interaction and decision making.    We must similarly lift a high level cleaning language into the interactive domain~\cite{heer2015predictive} in order to tighten the feedback loop between the user and cleaning process.
@@ -32,18 +32,20 @@ There is a need for a high level language for domain experts to describe the dat
 % 
 % long pipeline from cleaning and output, so insert inspection.  
 \vspace{0.5em}
-\noindent\textbf{Application-oriented Cleaning:}  A recurring theme amongst our survey participants was the observation that data cleaning is driven by the needs of the downstream application.  We found surprisingly little evidence of data cleaning as a discrete and isolated process. Systems such as SampleClean~\cite{DBLP:journals/debu/KrishnanWFGKM015} and ActiveClean~\cite{activecleanarxiv} have already shown the potential for leveraging application knowledge to reduce data cleaning costs by {\color{red}{an order of magnitude or more}}.  However these systems have been tailored to specialized use cases (individual aggregation queries and convex models, respectively), and support for other more complex operations as well as multi-stage sequences of analyses is needed.
+\noindent\textbf{Application-oriented Cleaning:}  A recurring theme amongst our survey participants was the observation that data cleaning is driven by the needs of the downstream application.  We found surprisingly little evidence of data cleaning as a discrete and isolated process. Systems such as SampleClean~\cite{DBLP:journals/debu/KrishnanWFGKM015} and ActiveClean~\cite{activecleanarxiv} have already shown the potential for leveraging application knowledge to reduce data cleaning costs by an order of magnitude or more compared to application agnostic approaches.  However these systems have been tailored to specialized use cases (individual aggregation queries and convex models, respectively), and support for other more complex operations as well as multi-stage sequences of analyses is needed.
 
 \vspace{0.5em}
-\noindent\textbf{Human-Computer Symbiosis:}   Some participants described tweaking cleaning operations and running the downstream analysis in order to visually inspect the results.  However, this form of manual configuration and parameter tuning does not make the best use of the domain expert's resources.   There is potential to introduce automation, and we have already seen examples of this.  For instance, active learning is used as part of crowd-sourced label acquisition~\cite{gokhale2014corleone,DBLP:journals/pvldb/HaasW0F15} to optimize an operation such as deduplication;  Wrangler automatically generates string extraction rules so that the user only needs to pick from a set of options; and TuPAQ~\cite{sparks2015automating} performs automatic hyperparameter tuning for machine learning models.   There is similar opportunity to identify additional data cleaning operations that can be automatically tuned, as well as to propose modifications to the sequence of operations itself~\cite{wisteria}.  The ultimate goal is to {\it let experts do what they do best, while machines do the rest}. \dhaas{Adam would be proud, but can we really get away with this?}
+\noindent\textbf{Human-Computer Symbiosis:}   Some participants described tweaking cleaning operations and running the downstream analysis in order to visually inspect the results.  However, this form of manual configuration and parameter tuning does not make the best use of the domain expert's resources.   There is potential to introduce automation, and we have already seen examples of this.  For instance, active learning is used as part of crowd-sourced label acquisition~\cite{gokhale2014corleone,DBLP:journals/pvldb/HaasW0F15} to optimize an operation such as de-duplication;  Wrangler automatically generates string extraction rules so that the user only needs to pick from a set of options; and TuPAQ~\cite{sparks2015automating} performs automatic hyper-parameter tuning for machine learning models.   There is similar opportunity to identify additional data cleaning operations that can be automatically tuned, as well as to propose modifications to the sequence of operations itself~\cite{wisteria}.  Ultimately, our goal should be to let experts do what they do best, while machines do the rest.
 
 \vspace{0.5em}
 \noindent\textbf{Testing and Debugging:} In order to develop automated optimization and tuning procedures, there must be a metric to optimize.  This can be quite challenging---one common measure of data cleaning effectiveness among survey participants was simply whether or not the downstream process compiled and ran!
 This clearly falls short of the standards needed for sophisticated automation, and methods for introducing metrics throughout the cleaning and analysis process are needed.
 For example, one might use performance on gold examples of known clean data to evaluate a cleaning operator.
-Such data could be acquired up front, or adaptively from a domain expert or crowd worker as cleaning proceeds.
+Such data could be acquired up front, or adaptively collected from a domain expert or crowd worker throughout the cleaning process.
 
-In addition, as data-cleaning researchers, there is a need for a ``dirtiness'' benchmark analgous to industry standard transaction and analytical data processing benchmarks.
+As the developer inspects different parts of the cleaning process, it will be increasingly important to provide tools to summarize and explain~\cite{DBLP:journals/pvldb/0002M13,DBLP:conf/sigmod/ChalamallaIOP14,wang2016qfix} the intermediate results in a way to goes beyond print statement outputs or row data entries.
+
+In addition, as data-cleaning researchers, there is a need for a cleaning benchmark analogous to industry standard transaction and analytical data processing benchmarks.
 Existing systems are often evaluated on synthetically generated errors that are may not reflect reality or on application-specific errors that are too specialized to serve as a standard benchmark across systems.
 
 %Such a benchmark needs to support cases when there is and is not a ground truth dataset.
@@ -54,7 +56,7 @@ when presenting analytics results. This is problematic since the data
 cleaning operations have a potential to introduce analyst biases,
 i.e., favoring a certain outcomes, into the analysis process.
 This sentiment is corroborated by our survey results and the results of Kandel et al.~\cite{kandel2012}.
-In a sense, this problem is analogous to statistical over-fitting, where if strong assumptions are made on a small sample of data, these transformations may not apply to future evolutions of the application.
+In a sense, this problem is analogous to statistical over-fitting, where cleaning decisions based on strong assumptions over a small sample of data (or a specialized analysis) may not apply to future evolutions of the application.
 An important challenge is designing data cleaning tools that: (1) allow analysts to communicate assumptions (e.g., which records have been removed) when presenting results, (2) automatically determine when an assumption is risky (e.g., correlates with the tested hypothesis), and (3) manages a ``paper trail'' of data transformations.
 
 
@@ -63,34 +65,3 @@ In this paper, we have presented a study of industry users of data analysis soft
 Our survey results highlight the issues that frustrate current workflows, and motivate our proposal of the research challenges central to the design of unified systems that can alleviate these issues.
 In summary, though we are in the early days of highly interactive data cleaning and preparation, we are optimistic about opportunities for systems that facilitate and automate rapid human-in-the-loop interactivity.
 
-
-\if{0}
- 
-* A language or languages for data cleaning.  An operation, such as deduplication involves a large number of possible algorithms or sytems techinques, ranging from crowdsourced solsutions(REF Anhai), machine learning-based fuzzy matching(REF).  It is often easier for a user to provide correct results rather than.
-* Be careful about survey biased towards technical people, not those that use GUIs. 
-* Usability: Tied with the language are a set of interactions to match the language operations (REF joe’s CIDR paper).  This is admittedly an amorpheous topic.  (REF agreementmaker work)
-* Goal oriented cleaning.  General data cleaning is rarely needed, and pay-as-you-go solutions(REF data spaces) are needed in most applications.   This begs the qusetion for hminimizing expert involvement.   Solutions such as sampleclean are oriented towards specializing the human effort towards porudictive tasks that maximize the cleaning for a particular application.  
-* Automation. 
-    * Hyperparameter tuning, however visual inspection by manually tuning each or combinations of parameters is both slow and and error-prone.  Automated hyperparemeter tuning (REF evan)
-    * String value munging, either deduplication, extraction, fixes.  Existing tools are often not sufficient and user intervention (REF Wrangler) is necessary.  However even in this settings, ways to generate suggestions and show them is better than users picking operations to perform.
-    * active learning is used, but only for crowd workers that fit inside an operator good progress folks.
-    * Opporutinity let the expert be the human in the loop.  The data analyst IS the human in the loop.
-    * Let humans do what they do best, machines to the rest.
-* Testing and debugging cleaning.  Data cleaning does not live within a vacuum.  It is often motivated by a set of desired applications, and .  How can it be tested?  For example, what effects will introducing or modiying a data cleaning procedure have on the rest of the dataset, or the downstream application?  For example, in our survey several respondents noted that their evaluation was based on whether the downstream applicaiton compiles or not.
-    * Reference Self eval idea.  long pipeline from cleaning and output, so insert inspection.  
-    * Reference benchmarking work and systematic ways to evaluate the efficacy of an approach when there is ground truth and when there is no ground truth.
-* (SANJAY) Overfitting and sharing.   It is easy to overfit the data cleaning to the intricacies of a particular application and the data for that application.  Although this is easy to do, it makes it difficult to share and re-use data cleaning procedures for similar tasks in the future, or share within an organization.  In these cases, tools to help prevent overfitting, similar to regularization in machine learning, are needed to help generalize data cleaning workflows into reusable components.  High level scripting languages can help in this regard, but automated tools are also needed.
-
-
-
-
-* Here’s a general system/interactive loop that is pie in the sky that would workfor the 99% cases.
-    * Data cleaning is user and context dependent.  So much relies on the developer’s, or downstream user's expert knowledge that interactive solutions are needed.    
-    * In fact, in some cases, the data cleaning process is divorced from the users using the data cleaning, which is surprising given the context-sensitive nature.
-    * trying cleaning procedures, algorithms, tuning parameters out, and evaluating the results through visual inspection of computed metrics, or the cleaned data
-    * Needs highly interactive systems, and often visual systems for domain experts
-    * Figure 1 shows a highlevel loop
-    * Only when combined into a single system does it make sense
-    * This motivates a set of interesting technical problems that we outline below.
-
-\fi
