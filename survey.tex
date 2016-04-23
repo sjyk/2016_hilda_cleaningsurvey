@@ -2,14 +2,17 @@
 Between April 2015 and Dec 2015, we conducted two sets of surveys and interviews with engineers, data analysts, and scientists who self-reported that they directly work with data in their organizations (N=29).
 
 \subsection{Methods}\label{sec:survey}
-The surveys consisted of a series of quantitative questions about tool/language preference and job description, and several open-ended questions about the participants' organization's data management challenges. The interviews mirrored the surveys and were conducted and recorded. It is important to note that we conducted two separate surveys to ensure that our survey questions were properly calibrated. The first survey was conducted in June 2015, and we collected 5 responses to a preliminary set of 18 questions, and we conducted 4 in-person/phone interviews based on the same questions. Using the results of this survey, and revising the questions, we conducted a second survey with more specific language on the questions that received 21 participants. 
-Most of the participants were contacted personally by the authors and were often acquaintances of the authors. However, the authors took care to ensure that the participants were not informed of any of the quantitative hypotheses or conclusions of the study before taking the survey. 
-Some participants were reached through forums frequented by data analysts\footnote{http://reddit.com/r/datascience}, and all participants had the option to take the survey anonymously.
+The surveys consisted of a series of quantitative questions about tool/language preference and job description, and several open-ended questions about the participants' organization's data management challenges. The interviews followed the script of the surveys and audio was recorded.
+It is important to note that we conducted two separate surveys to ensure that our survey questions were properly calibrated.
+The first survey was conducted with a preliminary set of 18\dhaas{In surveymonkey, it looks like 53?} questions in June 2015, and we collected 5 written responses and 4 in-person/phone interviews.
+In November 2015 we conducted a revised second survey with \dhaas{18?} more focused questions, and collected 21 written responses. 
+Most of the participants were contacted personally by the authors and were often acquaintances.
+However, the authors took care to ensure that the participants were not informed of any of the quantitative hypotheses or conclusions of the study before taking the survey. 
+Other participants were reached through forums frequented by data analysts\footnote{http://reddit.com/r/datascience}, and all participants had the option to take the survey anonymously.
 
+As the survey data captured via the methods described above is insufficient to draw statistically significant quantitative conclusions, our subsequent analysis is purely qualitative and designed to present insightful comments that illustrate the sentiments of our respondents. \dhaas{do folks think this is too much self-hate? Other caveats we should present here?}
 The questions and the data for the survey are available at: 
-{\color{red}{\url{http://TODO}}}
-
-Caveats
+\note{\url{http://TODO}}
 
 \subsubsection{Participant Demographics}
 The survey asked a series of questions about the participants' job descriptions, expertise, and use of certain tools/interfaces.
@@ -17,7 +20,7 @@ We briefly summarize the results.
 
 \vspace{0.5em}
 
-\noindent\textbf{Job Descriptions: } We requested participants to provide a job description and details about their organizations. We categorized the participants by their reported organization size and their roles. The participants were mostly from larger organizations (defined as > 100 employees). We also found that they were mostly evenly split between infrastructure and data analytics. A surprisingly larger number (7/30) reported that they performed both roles in their organizations. The results are summarized in Table \ref{tab:jobs}. 
+\noindent\textbf{Job Descriptions: } We requested participants to provide a job description and details about their organizations. We categorized the participants by their reported organization size and their roles. The participants were mostly from larger organizations (defined as > 100 employees). We also found that they were mostly evenly split between infrastructure and data analytics. A surprisingly large number (7/30) reported that they performed both roles in their organizations. The results are summarized in Table \ref{tab:jobs}. 
 
 \begin{table}[t]
 \centering
@@ -60,7 +63,7 @@ Both                                & 7\\  \hline
 
 
 \subsection{Themes}\label{sec:themes}
-We highlight several of the themes we discovered from the survey and the interviews: (1) the tension between infrastructure engineers and data analysts, (2) debugging and validation in data cleaning, and (3) methodology and over-fitting.
+We highlight several of the themes we discovered from the survey and the interviews: (1) the tension between infrastructure engineers and data analysts, (2) debugging and validation in data cleaning, and (3) iterative cleaning and over-fitting.
 
 \subsubsection{Analysts vs. Infrastructure}
 As noted by our demographics analysis, there are three main segments of data engineers: analysts, infrastructure engineers, and those who do both.
@@ -73,10 +76,10 @@ One of the most significant tensions between the infrastructure engineers and an
 
 \vspace{0.5em}
 
-The tension between the infrastructure engineers and the data analysts seems to stem from the semantics of data and who knows these semantics. Our responses also suggest that the definition of data error is highly analysis dependent. In response to how she defines dirty data, one analyst responded,
+The tension between the infrastructure engineers and the data analysts seems to stem from the semantics of data and who knows these semantics. Our responses also suggest that the definition of data error is highly analysis-dependent. In response to how she defines dirty data, one analyst responded,
 
 \vspace{0.5em}
-\emph{Domain expertise, I guess. I wish there were a more rigorous way to do this but we look at the models and guess if the data are correct. -Analyst}
+\emph{Domain expertise, I guess. I wish there were a more rigorous way to do this but we look at the models and guess if the data are correct.}
 
 \vspace{0.5em}
 
@@ -84,21 +87,21 @@ This is in contrast to how infrastructure engineers want to handle data quality 
 Several infrastructure engineers noted that they saw dirty data as symptomatic of an error in the processing pipeline (i.e., a software bug or incorrect schema). Their goal was to rectify the bug or drop the corrupted data with a minimal impact on system SLOs:
 
 \vspace{0.5em}
-\emph{There are software bugs in the application such as edge cases that are not handled or changes to the services by programmers that have unintended consequences. Fixing data errors in a high-availability setting is challenge as it may require shutting of services. -Infrastructure Engineer}
+\emph{There are software bugs in the application such as edge cases that are not handled or changes to the services by programmers that have unintended consequences. Fixing data errors in a high-availability setting is challenge as it may require shutting off services.}
 
 \vspace{0.5em}
 
 Most of the infrastructure engineers surveyed used sampling or unit testing to detect obvious problems in the data processing pipeline, for example,
 
 \vspace{0.5em}
-\emph{We have checks for file consistency, if the end of files look like the write was interrupted early, whether the size of a file seems significantly bigger or smaller than usual, etc. we check data with some standard queries to make sure the files have the expected range of values, ie for every country, and every minute of the day there was data. -Infrastructure Engineer}
+\emph{We have checks for file consistency, if the end of files look like the write was interrupted early, whether the size of a file seems significantly bigger or smaller than usual, etc. we check data with some standard queries to make sure the files have the expected range of values, ie for every country, and every minute of the day there was data.}
 
 \vspace{0.5em}
 
 Such approaches require a clear definition of dirty data that is independent of the downstream analysis. Even worse, one consultant from a large database vendor noted that errors might be found well after some result is reported:
 
 \vspace{0.5em}
-\emph{Most of these errors are subtle enough that the analysis will go through e.g., with standard null value semantics of SQL, but give an incorrect answer. Usually is only caught weeks later after someone notices something like...well the Wilmington branch cannot have 1M sales in a week}
+\emph{Most of these errors are subtle enough that the analysis will go through e.g., with standard null value semantics of SQL, but give an incorrect answer. Usually is only caught weeks later after someone notices something like...well the Wilmington branch cannot have 1M sales in a week.}
 
 \subsubsection{Debugging and Validation}
 We also found that debugging and evaluating data analysis pipelines for data error is a significant challenge. We asked the participants ``How do you determine whether the data is sufficiently clean to trust the analysis?'', and it was clear from the responses that most analysts had not thought about this problem:
@@ -106,8 +109,8 @@ We also found that debugging and evaluating data analysis pipelines for data err
 \vspace{0.5em}
 \emph{Other than common sense we do not have a procedure to do this.}
 
-\vspace{0.5em}
-\emph{We usually do not do rigorous validation of data cleaning. We typically clean our data until the desired analytics works without error. This is not desirable but practical since in most cases data error is probably overshadowed by errors/inaccuracies in the models themselves. -Data Analyst}
+\vspace{0.7em}
+\emph{We usually do not do rigorous validation of data cleaning. We typically clean our data until the desired analytics works without error. This is not desirable but practical since in most cases data error is probably overshadowed by errors/inaccuracies in the models themselves.}
 
 \vspace{0.5em}
 
@@ -117,20 +120,23 @@ One of the most interesting findings was that analysts used explainability as a 
 \emph{Usually the most time is spent getting the data into a state where your code even runs. After that, we make sure that we can explain every trend seen in the analysis.}
 
 \subsubsection{Analysis-Cleaning Iteration}
-We also found that many participants reported an interactive and iterative process.
+Confirming the findings of Kandel et al., we also found that many participants reported data cleaning to be an interactive and iterative process.
 
 \vspace{0.5em}
-\emph{Do your level best on initial sample of data, determine what are exceptions and build filters. Iterate with greater knowledge.}
+\emph{[You] do your level best on initial sample of data, determine what are exceptions and build filters. Iterate with greater knowledge.}
+
+\vspace{0.7em}
+\emph{[It's an] iterative process, where I assess biggest problem, devise a fix, re-evaluate. It is dirty work.}
 
 \vspace{0.5em}
-\emph{Iterative process, where I assess biggest problem, devise a fix, re-evaluate. It is dirty work.}
 
-\vspace{0.5em}
-
-This suggests that analysts are adaptively cleaning their datasets iterating between cleaning and querying the data. One of the biggest concerns that this raises is over-fitting with data cleaning and confirmation bias. This coupled with a lack of evaluation methodology is particularly worrisome. One analyst addressed this problem by comparing to other published results to ensure that their analysis is in agreement:
+This suggests that analysts are adaptively cleaning their datasets by iterating between cleaning and querying the data.
+A natural concern raised by this approach is over-fitting: cleaning data until the output of a specific analysis is achieved.
+Coupled with a lack of evaluation methodology, the potential for confirmation bias is particularly worrisome.
+One analyst addressed this problem by comparing to other published results as a sanity check:
 
 \vspace{0.5em}
 \emph{We typically cross-reference data with other published materials to make sure it is in the right ballpark.}
 \vspace{0.5em}
 
-This solution is obviously not generalizable as many data analysis projects in industry are one-of-a-kind, and there likely does not exist a publicly available similar clean dataset to validate results.
+However, such a solution cannot generalize well, as many data analysis projects in industry are one-of-a-kind, and for most there likely does not exist a publicly available gold standard against which to validate results.

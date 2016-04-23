@@ -34,6 +34,7 @@
 \usepackage{enumitem}
 
 \newcommand{\textcomment}[3]{\textbf{\textcolor{#1}{(#2): #3}}}
+\newcommand{\note}[1]{\textbf{\textcolor{red}{#1}}}
 \newcommand{\dhaas}[1]{\textcomment{magenta}{dhaas}{#1}}
 
 \lstset{basicstyle=\large,breaklines=true,language=SQL,belowcaptionskip=.1\baselineskip}
@@ -66,7 +67,7 @@
 Data cleaning is frequently an iterative process tailored to the requirements of a specific analysis task.
 Their design and implementation of iterative data cleaning tools presents novel challenges, both technical and organizational, to the community.
 In this paper, we present results from a user survey $(N=29)$ of data analysts and infrastructure engineers from industry and academia. We highlight three important themes: (1) the iterative nature of data cleaning, (2) the consequent relationship between the analytics and infrastructure staff, and (3) the difficulties in validating data cleaning.
-We conclude by presenting a number of recommendations for future work in which we hypothesize an interactive data cleaning system that accounts for the observed challenges.
+We conclude by presenting a number of recommendations for future work in which we envision an interactive data cleaning system that accounts for the observed challenges.
 \end{abstract}
 
 \input{introduction}
