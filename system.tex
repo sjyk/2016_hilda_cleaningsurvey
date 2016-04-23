@@ -48,7 +48,15 @@ Existing systems are often evaluated on synthetically generated errors that are 
 
 %Such a benchmark needs to support cases when there is and is not a ground truth dataset.
 \vspace{0.5em}
-\noindent\textbf{Combating Overfitting:} \dhaas{This whole paragraph needs re-writing, but I'm not comfortable doing it. Sanjay, take a stab?} Along the lines of testing and debugging, we find evidence of overfitting the data cleaning procedures to the specific instance of the downstream applicationi.  For instance, {\color{red}{EXAMPLE}}.  This can lead to overly complex, brittle data cleaning pipelines that are hard to share with other applications and may not apply to future evolutions of the application.  {\color{red}{APPLY SANJAY}}
+\noindent\textbf{Combating Over-fitting:}
+Despite their importance, data cleaning procedures are often under-reported
+when presenting analytics results. This is problematic since the data
+cleaning operations have a potential to introduce analyst biases,
+i.e., favoring a certain outcomes, into the analysis process.
+This sentiment is corroborated by our survey results and the results of Kandel et al.~\cite{kandel2012}.
+In a sense, this problem is analogous to statistical over-fitting, where if strong assumptions are made on a small sample of data, these transformations may not apply to future evolutions of the application.
+An important challenge is designing data cleaning tools that: (1) allow analysts to communicate assumptions (e.g., which records have been removed) when presenting results, (2) automatically determine when an assumption is risky (e.g., correlates with the tested hypothesis), and (3) manages a ``paper trail'' of data transformations.
+
 
 \section{Conclusion}
 In this paper, we have presented a study of industry users of data analysis software that confirms the recent shift in data cleaning processes towards iterative workflows.

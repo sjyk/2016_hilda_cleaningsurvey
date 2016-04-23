@@ -4,15 +4,18 @@ Between April 2015 and Dec 2015, we conducted two sets of surveys and interviews
 \subsection{Methods}\label{sec:survey}
 The surveys consisted of a series of quantitative questions about tool/language preference and job description, and several open-ended questions about the participants' organization's data management challenges. The interviews followed the script of the surveys and audio was recorded.
 It is important to note that we conducted two separate surveys to ensure that our survey questions were properly calibrated.
-The first survey was conducted with a preliminary set of 18\dhaas{In surveymonkey, it looks like 53?} questions in June 2015, and we collected 5 written responses and 4 in-person/phone interviews.
-In November 2015 we conducted a revised second survey with \dhaas{18?} more focused questions, and collected 21 written responses. 
+The first survey was conducted with a preliminary set of 53 questions in June 2015, and we collected 5 written responses and 4 in-person/phone interviews.
+In November 2015 we conducted a revised second survey with 18 more focused questions, and collected 21 written responses. 
 Most of the participants were contacted personally by the authors and were often acquaintances.
 However, the authors took care to ensure that the participants were not informed of any of the quantitative hypotheses or conclusions of the study before taking the survey. 
 Other participants were reached through forums frequented by data analysts\footnote{http://reddit.com/r/datascience}, and all participants had the option to take the survey anonymously.
 
-As the survey data captured via the methods described above is insufficient to draw statistically significant quantitative conclusions, our subsequent analysis is purely qualitative and designed to present insightful comments that illustrate the sentiments of our respondents. \dhaas{do folks think this is too much self-hate? Other caveats we should present here?}
+\sk{How about this text}
+It is important to note that this survey is not meant to be statistically representative sample of industrial practice, and the number of participants is insufficient to draw statistically significant conclusions. Therefore, we present qualitative results around the insights learned from the participants, and contextualize these insights based on the participants' self-reported demographics.
 The questions and the data for the survey are available at: 
 \note{\url{http://TODO}}
+
+ \dhaas{As the survey data captured via the methods described above is insufficient to draw statistically significant quantitative conclusions, our subsequent analysis is purely qualitative and designed to present insightful comments that illustrate the sentiments of our respondents. do folks think this is too much self-hate? Other caveats we should present here?}
 
 \subsubsection{Participant Demographics}
 The survey asked a series of questions about the participants' job descriptions, expertise, and use of certain tools/interfaces.
@@ -63,11 +66,44 @@ Both                                & 7\\  \hline
 
 
 \subsection{Themes}\label{sec:themes}
-We highlight several of the themes we discovered from the survey and the interviews: (1) the tension between infrastructure engineers and data analysts, (2) debugging and validation in data cleaning, and (3) iterative cleaning and over-fitting.
+We highlight several of the themes we discovered from the survey and the interviews: data cleaning methodology and the tension between infrastructure engineers and data analysts.
+
+\subsubsection{Data Cleaning Methodology}
+Among those participants who self-reported as data analysts, one major concern was data cleaning methodology.
+Confirming the findings of Kandel et al., we afound that many participants reported data cleaning to be an interactive and iterative process, and as one participant noted,
+
+\vspace{0.7em}
+\emph{[It's an] iterative process, where I assess biggest problem, devise a fix, re-evaluate. It is dirty work.}
+
+\vspace{0.5em}
+
+We broadly interpreted iteration to mean that analysts alternate between cleaning data and analysis, and using the analysis to guide future cleaning cleaning results.
+A natural concern raised by this approach is over-fitting: cleaning data until the output of a specific analysis is achieved.
+We asked questions to explore how this iterative process may affect results, especially in the context of confirmation bias.
+
+The next question that we asked was about evaluation methodology, namely, ``How do you determine whether the data is sufficiently clean to trust the analysis?'', and it was clear from the responses that many analysts had not thought about this problem:
+
+\vspace{0.5em}
+\emph{Other than common sense we do not have a procedure to do this.}
+
+\vspace{0.7em}
+\emph{We usually do not do rigorous validation of data cleaning. We typically clean our data until the desired analytics works without error. This is not desirable but practical since in most cases data error is probably overshadowed by errors/inaccuracies in the models themselves.}
+
+\vspace{0.5em}
+
+Iteration coupled with a lack of evaluation methodology is particularly worrisome.
+In their defense, some analysts were aware of the potential of such problems, but did not have a solution.
+For example, One analyst suggested comparing to other published results as a sanity check:
+
+\vspace{0.5em}
+\emph{We typically cross-reference data with other published materials to make sure it is in the right ballpark.}
+\vspace{0.5em}
+
+This is a solution may work in some cases, but many data analysis projects in industry are one-of-a-kind, and for most there likely does not exist a publicly available gold standard against which to validate results.
+These results emphasize that the data cleaning community needs to have a better answer to this problem, especially in the backdrop of the reproducibility crisis in science~\cite{reproducibility}.
 
 \subsubsection{Analysts vs. Infrastructure}
-As noted by our demographics analysis, there are three main segments of data engineers: analysts, infrastructure engineers, and those who do both.
-One of the most important themes that we discovered in the data was the divide between infrastructure engineers and analysts in how these groups address data quality problems. In particular, we see a difference in the way that these two groups of participants conceptualize dirty data, the solutions, and repair procedures.
+Another important theme that we discovered in the data was the divide between infrastructure engineers and analysts in how these groups address data quality problems. In particular, we see a difference in the way that these two groups of participants conceptualize dirty data, the solutions, and repair procedures.
 
 One of the most significant tensions between the infrastructure engineers and analysts is about the definition of dirty data. While the infrastructure engineers are in charge of the data ingest pipelines, ETL, and other pre-processing steps, it is often the analysts who get to ``define'' what is dirty. One infrastructure engineer noted the frustration about being caught in the middle between the business units that generated the data and the analysts querying the data:
 
@@ -102,41 +138,3 @@ Such approaches require a clear definition of dirty data that is independent of 
 
 \vspace{0.5em}
 \emph{Most of these errors are subtle enough that the analysis will go through e.g., with standard null value semantics of SQL, but give an incorrect answer. Usually is only caught weeks later after someone notices something like...well the Wilmington branch cannot have 1M sales in a week.}
-
-\subsubsection{Debugging and Validation}
-We also found that debugging and evaluating data analysis pipelines for data error is a significant challenge. We asked the participants ``How do you determine whether the data is sufficiently clean to trust the analysis?'', and it was clear from the responses that most analysts had not thought about this problem:
-
-\vspace{0.5em}
-\emph{Other than common sense we do not have a procedure to do this.}
-
-\vspace{0.7em}
-\emph{We usually do not do rigorous validation of data cleaning. We typically clean our data until the desired analytics works without error. This is not desirable but practical since in most cases data error is probably overshadowed by errors/inaccuracies in the models themselves.}
-
-\vspace{0.5em}
-
-One of the most interesting findings was that analysts used explainability as a proxy for validating data cleaning. That is, they ensured that they could justify their all of their operations.
-
-\vspace{0.5em}
-\emph{Usually the most time is spent getting the data into a state where your code even runs. After that, we make sure that we can explain every trend seen in the analysis.}
-
-\subsubsection{Analysis-Cleaning Iteration}
-Confirming the findings of Kandel et al., we also found that many participants reported data cleaning to be an interactive and iterative process.
-
-\vspace{0.5em}
-\emph{[You] do your level best on initial sample of data, determine what are exceptions and build filters. Iterate with greater knowledge.}
-
-\vspace{0.7em}
-\emph{[It's an] iterative process, where I assess biggest problem, devise a fix, re-evaluate. It is dirty work.}
-
-\vspace{0.5em}
-
-This suggests that analysts are adaptively cleaning their datasets by iterating between cleaning and querying the data.
-A natural concern raised by this approach is over-fitting: cleaning data until the output of a specific analysis is achieved.
-Coupled with a lack of evaluation methodology, the potential for confirmation bias is particularly worrisome.
-One analyst addressed this problem by comparing to other published results as a sanity check:
-
-\vspace{0.5em}
-\emph{We typically cross-reference data with other published materials to make sure it is in the right ballpark.}
-\vspace{0.5em}
-
-However, such a solution cannot generalize well, as many data analysis projects in industry are one-of-a-kind, and for most there likely does not exist a publicly available gold standard against which to validate results.
