@@ -65,19 +65,24 @@ Both                                & 7\\  %\hline
 We highlight several of the themes we discovered from the survey and the interviews: data cleaning methodology and the tension between infrastructure engineers and data analysts.
 
 \subsubsection{Data Cleaning Methodology}
-Among those participants who self-reported as data analysts, one major concern was data cleaning methodology.
-Confirming the findings of Kandel et al., we afound that many participants reported data cleaning to be an interactive and iterative process, and as one participant noted,
+Responses from participants who self-reported as data analysts to questions about data cleaning methodology revealed two important themes: the iterative nature of data cleaning, and the lack of rigor in evaluating cleaning workflows.
+
+\vspace{0.5em}
+\noindent\textbf{Data cleaning is iterative:}
+Confirming the findings of Kandel et al., we found that many participants reported data cleaning to be an interactive and iterative process.
+For example, as one participant noted,
 
 \vspace{0.7em}
 \emph{[It's an] iterative process, where I assess biggest problem, devise a fix, re-evaluate. It is dirty work.}
 
 \vspace{0.5em}
-
 We broadly interpreted iteration to mean that analysts alternate between cleaning data and analysis, and using the analysis to guide future cleaning cleaning results.
 A natural concern raised by this approach is over-fitting: cleaning data until the output of a specific analysis is achieved.
 We asked questions to explore how this iterative process may affect results, especially in the context of confirmation bias.
 
-The next question that we asked was about evaluation methodology, namely, ``How do you determine whether the data is sufficiently clean to trust the analysis?'', and it was clear from the responses that many analysts had not thought about this problem:
+\vspace{0.5em}
+\noindent\textbf{Evaluating data cleaning is ad-hoc:}
+The responses to the question ``How do you determine whether the data is sufficiently clean to trust the analysis?'' made it clear that many analysts had not thought hard about how they go about evaluating their cleaning workflows:
 
 \vspace{0.5em}
 \emph{Other than common sense we do not have a procedure to do this.}
@@ -95,7 +100,7 @@ For example, One analyst suggested comparing to other published results as a san
 \emph{We typically cross-reference data with other published materials to make sure it is in the right ballpark.}
 \vspace{0.5em}
 
-This is a solution may work in some cases, but many data analysis projects in industry are one-of-a-kind, and for most there likely does not exist a publicly available gold standard against which to validate results.
+This solution may work in some cases, but many data analysis projects in industry are one-of-a-kind, and for most there likely does not exist a publicly available gold standard against which to validate results.
 These results emphasize that the data cleaning community needs to have a better answer to this problem, especially in the backdrop of the reproducibility crisis in science~\cite{reproducibility}.
 
 \subsubsection{Analysts vs. Infrastructure}

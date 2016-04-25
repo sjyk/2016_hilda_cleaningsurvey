@@ -1,26 +1,42 @@
 % !TEX root = main.tex
 \section{Introduction}
-As large-scale data sources have become increasingly numerous and easy to acquire, the challenges associated with integrating and preparing them for analysis have also multiplied.
-Consequently, a necessary step in modern data analysis is \textit{data cleaning}, wherein issues caused by incorrect, missing, and duplicate data are resolved.
-In 2012, Kandel et al. surveyed a number of data analysts and found that over 80\% of their time is spent cleaning their data during analysis~\cite{kandel2012}.
+As it has become easier to acquire and store large amounts of data, the challenges associated with integrating and preparing datasets for analysis have also multiplied.
+A necessary but often very time-consuming step in data analysis is \textit{data cleaning}, wherein issues caused by incorrect, missing, and duplicate data are resolved.
+In 2012, Kandel et al. surveyed a number of data analysts and found that over 80\% of their time is spent cleaning, reformatting, and organizing their data during analysis~\cite{kandel2012}.
 
-Traditionally, data cleaning routines have been viewed as static components that fit into data integration or Extract-Transform-Load (ETL) pipelines and are executed once on new data entering the system.~\cite{apachefalcon, informatica, talend, nadeef}.
-However, this perspective fails to take into account the fact that data cleaning is frequently an iterative process tailored to the requirements of a specific analysis task.
+Traditionally, data cleaning routines, sequences of transformations such as deduplication or outlier removal that convert raw data into a format useful for analysis, have been viewed as static components that fit into data integration or Extract-Transform-Load (ETL) pipelines and are executed once on new data entering the system~\cite{apachefalcon, informatica, talend, nadeef}.
+However, this perspective fails to take into account that data cleaning is frequently an iterative process tailored to the requirements and semantics of a specific analysis task.
 As a result, several systems have been developed recently to support the iterative specification and refinement of data cleaning workflows~\cite{trifacta, 2011-wrangler, openrefine, wisteria}.
+These human-in-the-loop cleaning systems are inherently interactive, and their design and implementation presents novel problems at the intersection of human factors and database research.
 
-Because such human-in-the-loop systems are inherently interactive, their design and implementation presents novel challenges to the data cleaning community.
-For example, usability becomes a key concern, as data analysts must repeatedly instantiate, modify, and execute data cleaning programs.
-Truly usable systems will need improve over the state of the art along a number of dimensions: increasing the automation of as many cleaning operations as possible and providing crowdsourcing support for complex operations that cannot be fully automated, driving the performance of automated and crowdsourced operations to interactive latencies, providing debugging mechanisms for analysts to understand and react to the output of cleaning operations, et cetera.
 
-The data cleaning community has long studied abstractions for modeling data error and designing large scale cleaning systems, and we believe the time is ripe to focus attention towards usability and interactivity.%---this presents a significant opportunity for technical problems and impact to data cleaning researchers.
+%Truly usable systems will need improve over the state of the art along a number of dimensions: 
+
+%increasing the automation of as many %cleaning operations as possible and %providing crowdsourcing support for %complex operations that cannot be fully %automated, driving the performance of %automated and crowdsourced operations to interactive latencies, providing %debugging mechanisms for analysts to %understand and react to the output of %cleaning operations, et cetera.
+
+This paper explores how data analysts use such tools, and what changes must be made to make data cleaning faster and more reliable.
+The data cleaning community has long studied abstractions for modeling data error and designing large scale cleaning systems, and we believe the time is ripe to focus attention towards usability and interactivity.
+To better understand this problem, we conducted a survey and interview study of 29 data analysts, data engineers, and others who work heavily with data.
+Though the number of participants is insufficient to draw statistically significant conclusions, we nevertheless present a qualitative selection of our initial survey results that expose several important themes in the workflows, methodologies, and challenges faced by practitioners today.
+Driven by these insights and building on our collective prior work on this subject, we present a number of recommendations for future of data cleaning systems.
+
+In particular, our survey results highlight three main themes: (1) analysts clean data in a non-linear and iterative process interleaving analysis and cleaning, (2) debugging and validating data cleaning is a major concern, and (3) the disconnect between the analysts who query the data and the infrastructure engineers who design the data cleaning routines serves as a major bottleneck.
+Based on these results, we propose a series of recommendations to better match academic data cleaning systems research with industrial practice.
+We describe simplification of data cleaning operators through high-level language design to streamline systems that both infrastructure and analysis staff can use, the opportunities for joint optimization over cleaning and query processing that such a system will create, and a better suite of tools to track lineage, debug, and validate data cleaning. 
+
+%, focused on a set of pragmatic challenges with the greatest opportunity to improve current process for the many data analysts who spend the majority of their time struggling with manipulating dirty data.
+ %In this paper, we provide such guidance, supported by concrete evidence from real-world data cleaners.
+ %---this presents a significant opportunity for technical problems and impact to data cleaning researchers.
 %To avoid building feature-rich but ultimately low-impact systems, however, it is important to guide new research in directions that will be valuable for actual practitioners of data cleaning.
-To better understand this problem space, we provide guidance through interviews and surveys with users that perform real-world data cleaning. %In this paper, we provide such guidance, supported by concrete evidence from real-world data cleaners.
-We first present our survey of a variety of engineers, data analysts and scientists who frequently work with data, then offer a qualitative analysis of the survey results that exposes several important themes in the workflows, methodologies, and challenges faced by practitioners today.
-Driven by these insights, we present an ambitious vision for the future of data cleaning systems, focused on a set of pragmatic challenges with the greatest opportunity to improve current process for the many data analysts who spend the majority of their time struggling with manipulating dirty data.
 
-In summary, our contributions are as follows:
+
+
+
+
+In summary, the paper is organized as follows:
 \begin{itemize}
-\item A survey of N=29 industry users of data analysis software that highlights the strengths and limitations of existing data cleaning workflows (Section~\ref{sec:survey}).
-\item A qualitative analysis of the survey results that highlights 3 key themes of modern data cleaning: (1) its iterative nature, (2) the relationship between the analytics and infrastructure staff who perform it, and (3) the difficulties inherent in its validation (Section~\ref{sec:themes}).
-\item A proposal for future research that addresses these themes within a unified framework for interactive data cleaning (Section~\ref{sec:future}).
+\item In Section~\ref{sec:relwork} we discuss related work in interactive data cleaning.
+\item In Section~\ref{sec:survey} we present initial results from a survey of N=29 industry users of data analysis software that highlights the strengths and limitations of existing data cleaning workflows.
+\item In Section~\ref{sec:themes} we provide a qualitative analysis of the survey results that highlights 3 key themes of modern data cleaning.
+\item In Section~\ref{sec:future} we propose future research that addresses these themes within a unified framework for interactive data cleaning. 
 \end{itemize}

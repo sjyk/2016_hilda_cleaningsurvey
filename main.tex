@@ -45,6 +45,12 @@
 \def\@copyrightspace{\relax}
 \makeatother
 
+\author{\large Sanjay Krishnan,~~Daniel Haas,~~Michael J. Franklin,~~Eugene Wu{$\,^\dag$} \\
+\vspace{.2em}\affaddr{\large AMPLab, UC Berkeley ~~~~ $^\dag$Columbia University} \\
+\fontsize{9}{10}\selectfont\ttfamily\upshape
+\vspace{.1em}\{sanjay,dhaas,franklin\}@cs.berkeley.edu, ewu@cs.columbia.edu
+}
+
 \begin{document}
 
 
@@ -67,7 +73,7 @@
 \begin{abstract}
 Data cleaning is frequently an iterative process tailored to the requirements of a specific analysis task.
 The design and implementation of iterative data cleaning tools presents novel challenges, both technical and organizational, to the community.
-In this paper, we present results from a user survey $(N=29)$ of data analysts and infrastructure engineers from industry and academia. We highlight three important themes: (1) the iterative nature of data cleaning, (2) the consequent relationship between the analytics and infrastructure staff, and (3) the difficulties in validating data cleaning.
+In this paper, we present results from a user survey $(N=29)$ of data analysts and infrastructure engineers from industry and academia. We highlight three important themes: (1) the iterative nature of data cleaning, (2) the lack of rigor in evaluating the correctness of data cleaning, and (3) the disconnect between the analysts who query the data and the infrastructure engineers who design the cleaning pipelines.
 We conclude by presenting a number of recommendations for future work in which we envision an interactive data cleaning system that accounts for the observed challenges.
 \end{abstract}
 

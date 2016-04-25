@@ -11,10 +11,10 @@
   \label{f:arch}
 \end{figure}
 
-Our survey results highlighted several bottlenecks that add friction to the data cleaning and analysis process.
+Our initial survey results highlighted several bottlenecks that add friction to the data cleaning and analysis process.
 The primary finding reiterates the observation that data cleaning is highly contextual---users intimately familiar with the downstream applications are needed to direct the data cleaning process.  In other words, these domain experts are the most important ``humans in the data cleaning loop''.  
 
-In practice, however, we found that the data cleaning process is commonly split across multiple organizational units: the IT department performs data cleaning, and sends the processed data to application developers and data scientists, who in turn perform additional data transformation and analysis (top of Figure~\ref{f:arch}).  This separation inhibits the ability to experiment and test different cleaning procedures and tune their parameters---feedback about the data cleaning process is often delayed until the downstream application developer (e.g., visually) inspects the application results.  We believe that these limitations need not exist, and envision a highly interactive data cleaning and analysis process, wherein infrastructure engineers, data analysts and domain experts can design, evaluate, and modify (with automated support) any stage of the data cleaning workflow (bottom of Figure~\ref{f:arch}). To this end, we present a series of technical challenges spanning HCI, statistic, and data management that must be overcome in order to support a truly interactive data cleaning system.
+In practice, however, we found that the data cleaning process is commonly split across multiple organizational units: the IT department performs data cleaning, and sends the processed data to application developers and data scientists, who in turn perform additional data transformation and analysis (top of Figure~\ref{f:arch}).  This separation inhibits the ability to experiment and test different cleaning procedures and tune their parameters---feedback about the data cleaning process is often delayed until the downstream application developer (e.g., visually) inspects the application results.  We believe that these limitations need not exist, and envision a highly interactive data cleaning and analysis process, wherein infrastructure engineers, data analysts and domain experts can design, evaluate, and modify (with automated support) any stage of the data cleaning workflow (bottom of Figure~\ref{f:arch}). To this end, we present a series of technical challenges spanning HCI, statistics, and data management that must be overcome in order to support a truly interactive data cleaning system.
 
 % As highlighted in the top half of Figure~\ref{f:arch}, changes to the cleaning process occur based on observations made at the end of the analysis pipeline.  
 
@@ -26,7 +26,7 @@ In addition, these parties must interact, and it is important to facilitate the 
 There is a need for a high level language for domain experts to describe the data cleaning goals at a logical level (e.g., providing de-duplication examples, descriptions of outliers) that also enables physical implementation choices to be guided by either automated tools or the technical experts that are tasked with implementing data cleaning at scale~\cite{DBLP:conf/sigmod/Galhardas00,wisteria}. 
 
 \vspace{0.5em}
-\noindent\textbf{Usability and Interactivity:} The need to focus on usability and visual interaction has been reiterated across many domains:  Wrangler~\cite{kandel2011wrangler} enables domain experts to perform complex text extraction tasks at scale, and  Polaris~\cite{stolte2002polaris} helps business analysts perform data-cube analysis through a visual interface. These systems place emphasis on the end-to-end process by reducing bottlenecks that stem from human interaction and decision making.    We must similarly lift a high level cleaning language into the interactive domain~\cite{heer2015predictive} in order to tighten the feedback loop between the user and cleaning process.
+\noindent\textbf{Usability and Interactivity:} The need to focus on usability and visual interaction has been reiterated across many domains:  Wrangler~\cite{kandel2011wrangler} (commercialized as Trifacta~\cite{trifacta}) enables domain experts to perform complex text extraction tasks at scale, and  Polaris~\cite{stolte2002polaris} (commercialized as Tableau~\cite{tableau}) helps business analysts perform data-cube analysis through a visual interface. These systems place emphasis on the end-to-end process by reducing bottlenecks that stem from human interaction and decision making.    We must similarly lift a high level cleaning language into the interactive domain~\cite{heer2015predictive} in order to tighten the feedback loop between the user and cleaning process.
 
 % Often times the domain experts are not techincal experts\footnote{Although our user study population is biased towards technical users, other studies~\cite{kandel2012} have shown that data analysts are often non-technical domain experts.}, and there is a need to map the high-level language into the visual interactive domain.  We have seen success from intergrating a domain specific language and visual interactions  in specialized data cleaning domains such as text extraction~\cite{kandel2011wrangler}.  Similarly agreementmaker work.
 % 
@@ -41,18 +41,18 @@ There is a need for a high level language for domain experts to describe the dat
 \noindent\textbf{Testing and Debugging:} In order to develop automated optimization and tuning procedures, there must be a metric to optimize.  This can be quite challenging---one common measure of data cleaning effectiveness among survey participants was simply whether or not the downstream process compiled and ran!
 This clearly falls short of the standards needed for sophisticated automation, and methods for introducing metrics throughout the cleaning and analysis process are needed.
 For example, one might use performance on gold examples of known clean data to evaluate a cleaning operator.
-Such data could be acquired up front, or adaptively collected from a domain expert or crowd worker throughout the cleaning process.
+Such data could be acquired up front, or adaptively collected from the analyst herself or crowd workers throughout the cleaning process.
 
-As the developer inspects different parts of the cleaning process, it will be increasingly important to provide tools to summarize and explain~\cite{DBLP:journals/pvldb/0002M13,DBLP:conf/sigmod/ChalamallaIOP14,wang2016qfix} the intermediate results in a way to goes beyond print statement outputs or row data entries.
+As the data analyst inspects different parts of the cleaning process, it will be increasingly important to provide tools to summarize and explain~\cite{DBLP:journals/pvldb/0002M13,DBLP:conf/sigmod/ChalamallaIOP14,wang2016qfix} the intermediate results in a way to goes beyond print statement outputs or row data entries.
 
-In addition, as data-cleaning researchers, there is a need for a cleaning benchmark analogous to industry standard transaction and analytical data processing benchmarks.
+In addition, to accelerate data cleaning research, there is a need for a cleaning benchmark analogous to industry standard transaction and analytical data processing benchmarks.
 Existing systems are often evaluated on synthetically generated errors that are may not reflect reality or on application-specific errors that are too specialized to serve as a standard benchmark across systems.
 
 %Such a benchmark needs to support cases when there is and is not a ground truth dataset.
 \vspace{0.5em}
 \noindent\textbf{Combating Over-fitting:}
 Despite their importance, data cleaning procedures are often under-reported
-when presenting analytics results. This is problematic since the data
+when presenting the results of data analysis. This is problematic since the data
 cleaning operations have a potential to introduce analyst biases,
 i.e., favoring a certain outcomes, into the analysis process.
 This sentiment is corroborated by our survey results and the results of Kandel et al.~\cite{kandel2012}.
@@ -61,7 +61,7 @@ An important challenge is designing data cleaning tools that: (1) allow analysts
 
 
 \section{Conclusion}
-In this paper, we have presented a study of industry users of data analysis software that confirms the recent shift in data cleaning processes towards iterative workflows.
+In this paper, we have presented initial results from a study of industry users of data analysis software that confirms the recent shift in data cleaning processes towards iterative workflows.
 Our survey results highlight the issues that frustrate current workflows, and motivate our proposal of the research challenges central to the design of unified systems that can alleviate these issues.
-In summary, though we are in the early days of highly interactive data cleaning and preparation, we are optimistic about opportunities for systems that facilitate and automate rapid human-in-the-loop interactivity.
+In summary, though the data cleaning community is in the early days of highly interactive data cleaning and preparation, there are clear opportunities for systems that facilitate and automate rapid human-in-the-loop interactivity.
 

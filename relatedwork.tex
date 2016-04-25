@@ -1,18 +1,19 @@
-\section{Background and Related Work}
+\section{Background and Related Work}\label{sec:relwork}
 Over the last two decades, data cleaning has been a key area of database research (see surveys~\cite{Dasu:2003:EDM:861869}, ~\cite{Rahm00datacleaning}, and tutorial~\cite{chu2016tut}).
-Even so, precisely defining data cleaning has been a challenging problem because there is a gap between the theoretical abstractions of data quality research (constraint-based cleaning) and the prevalent script-hacking done by data scientists.
+Even so, precisely defining data cleaning has been a challenging problem because there is a gap between the theoretical abstractions of data quality research (e.g., constraint-based cleaning) and the prevalent script-hacking done by data scientists.
 To understand data cleaning practice, Kandel et al. conducted a seminal interview study of industry to identify the key challenges in data analytics~\cite{kandel2012}. 
-This paper revisits three conclusions from~\cite{kandel2012}: (1) analysts engaged in a non-linear and iterative processes, (2) analysts often work closely with IT staff to acquire and clean data, and (3) existing tools make it difficult to communicate assumptions, i.e., which data have been removed.
+Our paper revisits three conclusions from~\cite{kandel2012}: (1) analysts engaged in a non-linear and iterative processes, (2) analysts often work closely with IT staff to acquire and clean data, and (3) existing tools make it difficult to communicate assumptions, i.e., which data have been removed.
 
 Since Kandel et al. there have been several new developments in data analytics such as the growing adoption of Machine Learning in industry and the proliferation of in-memory, low-latency data processing frameworks such as Apache Spark. 
 Our survey focuses on these points and how they affect the three aforementioned themes.
-This study is relevant to data cleaning theory and practice since no existing systems address the end-to-end iterative data cleaning process.
+Since no existing systems address the end-to-end iterative data cleaning process, our analysis provides useful guidance for the design of systems in the future.
 
-At one extreme, extract-transform-load (ETL) systems~\cite{informatica,talend,apachefalcon} require developers to manually write data cleaning rules and execute them as long batch jobs, 
+Existing systems fall into two major categories.
+First, extract-transform-load (ETL) systems~\cite{informatica,talend,apachefalcon} require developers to manually write data cleaning rules and execute them as long batch jobs, 
 and constraint-driven tools allow analysts to define ``data quality rules'' and automatically propose corrections to maximally satisfy these rules \cite{DBLP:conf/sigmod/DallachiesaEEEIOT13}.
 These frameworks are largely aimed towards IT/DevOPs staff and do not provide the opportunity for analyst iteration or user feedback-- inhibiting the user's ability to rapidly prototype different data cleaning solutions.
 On the other hand, projects such as Wrangler~\cite{wrangler,trifacta} and OpenRefine~\cite{openrefine} support iteration with spreadsheet-style interfaces that enable the user to compose data cleaning sequences by directly manipulating a sample of the data and applying these sequences to the full dataset.
-However, they are limited to specific cleaning tasks (extraction) and sit outside the critical path of the main data processing pipeline. 
+However, they are limited to specific cleaning tasks (extraction) and sit outside the critical path of the main data cleaning routine. 
 Ideally, we would like a framework that this is processing data as it arrives, like the ETL tools, but supports the interactivity of tools like Trifacta.
 
 While human-in-the-loop data cleaning systems have been extensively studied~\cite{gokhale2014corleone,DBLP:conf/cidr/StonebrakerBIBCZPX13, park2014crowdfill,chen2014integrating,YakoutENOI11,ChuKATARA, wisteria}, a key missing piece is a detailed study of how data analysts interact with such systems. 
@@ -21,7 +22,7 @@ reducing the latency of human operations~\cite{DBLP:journals/pvldb/HaasW0F15},
 understanding quality in macrotasks~\cite{DBLP:journals/pvldb/HaasAGM15},
 reducing latency with sampling~\cite{DBLP:journals/debu/KrishnanWFGKM015},
 mitigating cognitive biases~\cite{DBLP:conf/recsys/KrishnanPFG14}, addressing privacy concerns~\cite{krishnan2016priv}, and  defining statistical correctness for data cleaning~\cite{krishnan2015svc, activecleanarxiv}.
-This survey hopes to contextualize these research questions, and propose recommendations for the future.
+With this survey, we contextualize these research questions and propose recommendations for the future.
 
 
 
