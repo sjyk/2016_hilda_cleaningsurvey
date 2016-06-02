@@ -1,8 +1,10 @@
 % !TEX root = main.tex
 \section{Introduction}
-As it has become easier to acquire and store large amounts of data, the challenges associated with integrating and preparing datasets for analysis have also multiplied.
-A necessary but often very time-consuming step in data analysis is \textit{data cleaning}, wherein issues caused by incorrect, missing, and duplicate data are resolved.
-In 2012, Kandel et al. surveyed a number of data analysts and found that over 80\% of their time is spent cleaning, reformatting, and organizing their data during analysis~\cite{kandel2012}.
+Preparing and cleaning datasets prior to analysis is a perennial challenge in data analytics.
+As it has become easier to acquire and store ever larger datasets, the challenges associated with large-scale \textit{data cleaning}, wherein issues caused by incorrect, missing, and duplicate data are identified and repaired, has become a subject of intense interest in the academic community~e.g., \cite{wisteria, ChuKATARA, BigDansing}.
+While there has been significant progress in the design and implementation of data cleaning algorithms, data cleaning remains expensive and time-consuming in terms of analyst effort~\cite{NYTimes}.
+Almost all data cleaning software requires some level of analyst supervision, on a spectrum from defining data quality rules to actually manually identifying and fixing errors.
+Consequently, this paper presents explores how data analysts use such tools, and what changes must be made to make data cleaning faster and more reliable.
 
 Traditionally, data cleaning routines, sequences of transformations such as deduplication or outlier removal that convert raw data into a format useful for analysis, have been viewed as static components that fit into data integration or Extract-Transform-Load (ETL) pipelines and are executed once on new data entering the system~\cite{apachefalcon, informatica, talend, nadeef}.
 However, this perspective fails to take into account that data cleaning is frequently an iterative process tailored to the requirements and semantics of a specific analysis task.
@@ -14,9 +16,8 @@ These human-in-the-loop cleaning systems are inherently interactive, and their d
 
 %increasing the automation of as many %cleaning operations as possible and %providing crowdsourcing support for %complex operations that cannot be fully %automated, driving the performance of %automated and crowdsourced operations to interactive latencies, providing %debugging mechanisms for analysts to %understand and react to the output of %cleaning operations, et cetera.
 
-This paper explores how data analysts use such tools, and what changes must be made to make data cleaning faster and more reliable.
 The data cleaning community has long studied abstractions for modeling data error and designing large scale cleaning systems, and we believe the time is ripe to focus attention towards usability and interactivity.
-To better understand this problem, we conducted a survey and interview study of 29 data analysts, data engineers, and others who work heavily with data.
+We conducted a survey and interview study of 29 data analysts, data engineers, and others who work heavily with data.
 Though the number of participants is insufficient to draw statistically significant conclusions, we nevertheless present a qualitative selection of our initial survey results that expose several important themes in the workflows, methodologies, and challenges faced by practitioners today.
 Driven by these insights and building on our collective prior work on this subject, we present a number of recommendations for future of data cleaning systems.
 
@@ -29,10 +30,7 @@ We describe simplification of data cleaning operators through high-level languag
  %---this presents a significant opportunity for technical problems and impact to data cleaning researchers.
 %To avoid building feature-rich but ultimately low-impact systems, however, it is important to guide new research in directions that will be valuable for actual practitioners of data cleaning.
 
-
-
-
-
+\iffalse
 In summary, the paper is organized as follows:
 \begin{itemize}
 \item In Section~\ref{sec:relwork} we discuss related work in interactive data cleaning.
@@ -40,3 +38,4 @@ In summary, the paper is organized as follows:
 \item In Section~\ref{sec:themes} we provide a qualitative analysis of the survey results that highlights 3 key themes of modern data cleaning.
 \item In Section~\ref{sec:future} we propose future research that addresses these themes within a unified framework for interactive data cleaning. 
 \end{itemize}
+\fi

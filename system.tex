@@ -1,4 +1,4 @@
-\section{Discussion and Future Directions}\label{sec:future}
+\section{Future Directions}\label{sec:future}
 
 
 \begin{figure}[ht]
@@ -12,7 +12,7 @@
 \end{figure}
 
 Our initial survey results highlighted several bottlenecks that add friction to the data cleaning and analysis process.
-The primary finding reiterates the observation that data cleaning is highly contextual---users intimately familiar with the downstream applications are needed to direct the data cleaning process.  In other words, these domain experts are the most important ``humans in the data cleaning loop''.  
+The primary finding reiterates the observation that data cleaning is highly contextual~--~users intimately familiar with the downstream applications are needed to direct the data cleaning process.  In other words, these domain experts are the most important ``humans in the data cleaning loop''.  
 
 In practice, however, we found that the data cleaning process is commonly split across multiple organizational units: the IT department performs data cleaning, and sends the processed data to application developers and data scientists, who in turn perform additional data transformation and analysis (top of Figure~\ref{f:arch}).  This separation inhibits the ability to experiment and test different cleaning procedures and tune their parameters---feedback about the data cleaning process is often delayed until the downstream application developer (e.g., visually) inspects the application results.  We believe that these limitations need not exist, and envision a highly interactive data cleaning and analysis process, wherein infrastructure engineers, data analysts and domain experts can design, evaluate, and modify (with automated support) any stage of the data cleaning workflow (bottom of Figure~\ref{f:arch}). To this end, we present a series of technical challenges spanning HCI, statistics, and data management that must be overcome in order to support a truly interactive data cleaning system.
 
@@ -61,7 +61,11 @@ An important challenge is designing data cleaning tools that: (1) allow analysts
 
 
 \section{Conclusion}
-In this paper, we have presented initial results from a study of industry users of data analysis software that confirms the recent shift in data cleaning processes towards iterative workflows.
+We have presented initial results from a study of industry users of data analysis software that confirms the recent shift in data cleaning processes towards iterative workflows.
 Our survey results highlight the issues that frustrate current workflows, and motivate our proposal of the research challenges central to the design of unified systems that can alleviate these issues.
 In summary, though the data cleaning community is in the early days of highly interactive data cleaning and preparation, there are clear opportunities for systems that facilitate and automate rapid human-in-the-loop interactivity.
+
+\vspace{0.5em}
+\small
+\textbf{This research is supported in part by NSF CISE Expeditions Award CCF-1139158, DOE Award SN10040 DE-SC0012463, and DARPA XData Award FA8750-12-2-0331, and gifts from Amazon Web Services, Google, IBM, SAP, The Thomas and Stacey Siebel Foundation, Apple Inc., Arimo, Blue Goji, Bosch, Cisco, Cray, Cloudera, Ericsson, Facebook, Fujitsu, HP, Huawei, Intel, Microsoft, Pivotal, Samsung, Schlumberger, Splunk, State Farm and VMware.}
 

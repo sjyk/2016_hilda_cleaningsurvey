@@ -14,7 +14,7 @@ and constraint-driven tools allow analysts to define ``data quality rules'' and 
 These frameworks are largely aimed towards IT/DevOPs staff and do not provide the opportunity for analyst iteration or user feedback-- inhibiting the user's ability to rapidly prototype different data cleaning solutions.
 On the other hand, projects such as Wrangler~\cite{wrangler,trifacta} and OpenRefine~\cite{openrefine} support iteration with spreadsheet-style interfaces that enable the user to compose data cleaning sequences by directly manipulating a sample of the data and applying these sequences to the full dataset.
 However, they are limited to specific cleaning tasks (extraction) and sit outside the critical path of the main data cleaning routine. 
-Ideally, we would like a framework that this is processing data as it arrives, like the ETL tools, but supports the interactivity of tools like Trifacta.
+Ideally, we would like a framework that is processing data as it arrives, like the ETL tools, but supports the interactivity of tools like Trifacta.
 
 While human-in-the-loop data cleaning systems have been extensively studied~\cite{gokhale2014corleone,DBLP:conf/cidr/StonebrakerBIBCZPX13, park2014crowdfill,chen2014integrating,YakoutENOI11,ChuKATARA, wisteria}, a key missing piece is a detailed study of how data analysts interact with such systems. 
 In prior work, we have studied a number of aspects of this problem, including
